@@ -33,8 +33,4 @@ public class MathBotTest {
     double output = matherator9003.subtract(100, 1000);
     assertEquals(-900.0, output, 0.01);
   }
-
-
-
-  // TODO: add more unit tests of your own
 }
