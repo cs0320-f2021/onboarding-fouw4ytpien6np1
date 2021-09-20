@@ -90,7 +90,7 @@ public class naive_knn implements knn {
 
       for (int i = k - 2; i > -1; i--) {
         if (Math
-            .abs(starsFromCSV.get(i).euclideanDistance - starsFromCSV.get(k - 1).euclideanDistance)
+            .abs(starsFromCSV.get(i).returnEuclideanDis() - starsFromCSV.get(k - 1).returnEuclideanDis())
             < epsilon) {
           intsLessThanK.add(i);
         } else {
@@ -99,7 +99,7 @@ public class naive_knn implements knn {
       }
       for (int i = k; i < starsFromCSV.size(); i++) {
         if (Math
-            .abs(starsFromCSV.get(i).euclideanDistance - starsFromCSV.get(k - 1).euclideanDistance)
+            .abs(starsFromCSV.get(i).returnEuclideanDis() - starsFromCSV.get(k - 1).returnEuclideanDis())
             < epsilon) {
           intsGreaterThanK.add(i);
         } else {
@@ -131,7 +131,7 @@ public class naive_knn implements knn {
   public void setDistances() {
     for (Star star : starsFromCSV) {
       Double dis =
-          distanceBetweenPoints(mainStar.x, mainStar.y, mainStar.z, star.x, star.y, star.z);
+          distanceBetweenPoints(mainStar.returnX(), mainStar.returnY(), mainStar.returnZ(), star.returnX(), star.returnY(), star.returnZ());
       star.setEuclideanDistance(dis);
     }
   }
@@ -159,7 +159,7 @@ public class naive_knn implements knn {
    */
   @Override
   public void sortDistances() {
-    starsFromCSV.sort(Comparator.comparing(star -> star.euclideanDistance));
+    starsFromCSV.sort(Comparator.comparing(Star::returnEuclideanDis));
   }
 
   /**
@@ -168,7 +168,7 @@ public class naive_knn implements knn {
   @Override
   public void displayResults() {
     for (Star star : this.kStars) {
-      System.out.println(star.starID);
+      System.out.println(star.returnStarID());
     }
   }
 
@@ -179,7 +179,7 @@ public class naive_knn implements knn {
    */
   public void setMainObject(String name) {
     for (Star star : starsFromCSV) {
-      if (star.name.equals(name)) {
+      if (star.returnStarName().equals(name)) {
         starsFromCSV.remove(star);
         mainStar = star;
       }

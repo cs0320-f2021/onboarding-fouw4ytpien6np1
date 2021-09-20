@@ -67,8 +67,8 @@ public final class Main {
           input = input.trim();
           String[] arguments = input.split(" ");
 
-          if ((arguments[0].equals("add") || arguments[0].equals("subtract")) &&
-              arguments.length == 3) {
+          if ((arguments[0].equals("add") || arguments[0].equals("subtract"))
+              && arguments.length == 3) {
             try {
               MathBot mathBot = new MathBot();
               int val1 = Integer.parseInt(arguments[1]);
@@ -86,7 +86,7 @@ public final class Main {
 
           } else if (arguments[0].equals("stars") && arguments.length == 2) {
             CSVReader csvReader = new CSVReader(arguments[1]); // try to read the given file
-            ArrayList<Star> stars = csvReader.starList;
+            ArrayList<Star> stars = csvReader.returnStarList();
             try (BufferedReader br2 = new BufferedReader(new InputStreamReader(System.in))) {
               String input2;
               while ((input2 = br2.readLine()) != null) {
@@ -94,10 +94,11 @@ public final class Main {
                 String[] arguments2 = input2.split(" ");
                 if (arguments[0].equals("stars") && arguments2.length == 2) {
                   CSVReader csvReader2 = new CSVReader(arguments[1]); // try to read the given file
-                  stars = csvReader2.starList;
+                  stars = csvReader2.returnStarList();
                 } else if ((arguments2[0]).equals("naive_neighbors") && arguments2.length == 5) {
                   try {
-                    Star mainStar = new Star("0", "mainStar", Double.parseDouble(arguments2[2]),
+                    Star mainStar = new Star("0", "mainStar",
+                        Double.parseDouble(arguments2[2]),
                         Double.parseDouble(arguments2[3]), Double.parseDouble(arguments2[4]));
                     naive_knn naiveKNN =
                         new naive_knn(mainStar, stars, Integer.parseInt(arguments2[1]));
@@ -108,7 +109,8 @@ public final class Main {
                   }
                 } else if ((arguments2[0]).equals("naive_neighbors") && arguments2.length == 3) {
                   try {
-                    Star dummyStar = new Star("0", "dummy", 0.0, 0.0, 0.0); // initialize dummy
+                    // initialize dummy:
+                    Star dummyStar = new Star("0", "dummy", 0.0, 0.0, 0.0);
                     naive_knn naiveKNN =
                         new naive_knn(dummyStar, stars, Integer.parseInt(arguments2[1]));
                     naiveKNN.setMainObject(

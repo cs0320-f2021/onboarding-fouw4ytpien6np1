@@ -13,7 +13,7 @@ public class naive_knnTest {
     @Test
     public void testNaive_knn() throws IOException {
         CSVReader csvReader = new CSVReader("data/stars/three-star.csv");
-        ArrayList<Star> stars = csvReader.starList;
+        ArrayList<Star> stars = csvReader.returnStarList();
         Star mainStar = new Star("test", "test", 0.0, 0.0, 0.0);
 
         // test k = 0 functionality
@@ -26,86 +26,86 @@ public class naive_knnTest {
         ArrayList<Star> outputK1 = knn2.returnKStars();
         assertEquals(1, outputK1.size());
         Star knn2Star1 = outputK1.get(0);
-        assertEquals("Star One", knn2Star1.name);
+        assertEquals("Star One", knn2Star1.returnStarName());
 
         // test k = 2 and order of stars
         naive_knn knn3 = new naive_knn(mainStar, stars, 2);
         knn3.knnAlgorithm();
         ArrayList<Star> outputK2 = knn3.returnKStars();
         Star knn3Star1 = outputK2.get(0);
-        assertEquals("1", knn3Star1.starID );
+        assertEquals("1", knn3Star1.returnStarID());
         Star knn3Star2 = outputK2.get(1);
-        assertEquals("2", knn3Star2.starID);
+        assertEquals("2", knn3Star2.returnStarID());
 
         // test k = 3 and order
         naive_knn knn4 = new naive_knn(mainStar, stars, 3);
         knn4.knnAlgorithm();
         ArrayList<Star> outputK3 = knn4.returnKStars();
         Star knn4Star1 = outputK3.get(0);
-        assertEquals("1", knn4Star1.starID);
+        assertEquals("1", knn4Star1.returnStarID());
         Star knn4Star2 = outputK3.get(1);
-        assertEquals("2", knn4Star2.starID);
+        assertEquals("2", knn4Star2.returnStarID());
         Star knn4Star3 = outputK3.get(2);
-        assertEquals("3", knn4Star3.starID);
+        assertEquals("3", knn4Star3.returnStarID());
 
         // test larger file with 10 Stars
         CSVReader csvReader2 = new CSVReader("data/stars/ten-star.csv");
-        ArrayList<Star> stars2 = csvReader2.starList;
+        ArrayList<Star> stars2 = csvReader2.returnStarList();
         Star mainStar2 = new Star("test", "test", 0.0, 0.0, 0.0);
 
         // test k = 1 on 10 star dataset
         naive_knn knn5 = new naive_knn(mainStar2, stars2, 1);
         knn5.knnAlgorithm();
         Star knn5star1 = knn5.returnKStars().get(0);
-        assertEquals("Sol", knn5star1.name);
+        assertEquals("Sol", knn5star1.returnStarName());
 
         // test k = 2
         naive_knn knn6 = new naive_knn(mainStar2, stars2, 2);
         knn6.knnAlgorithm();
         Star knn6Star1 = knn6.returnKStars().get(0);
-        assertEquals("Sol", knn6Star1.name);
+        assertEquals("Sol", knn6Star1.returnStarName());
         Star knn6Star2 = knn6.returnKStars().get(1);
-        assertEquals("Proxima Centauri", knn6Star2.name);
+        assertEquals("Proxima Centauri", knn6Star2.returnStarName());
     }
 
     @Test
     public void testSetDistances() throws IOException {
         CSVReader csvReader = new CSVReader("data/stars/three-star.csv");
-        ArrayList<Star> stars = csvReader.starList;
+        ArrayList<Star> stars = csvReader.returnStarList();
         Star mainStar = new Star("test", "test", 0.0, 0.0, 0.0);
 
         naive_knn knn = new naive_knn(mainStar, stars, 3);
         knn.setDistances();
         ArrayList<Star> starsFromCSV = knn.returnStarsFromCSV();
         Star firstStar = starsFromCSV.get(0);
-        assertEquals(1, firstStar.euclideanDistance, 0.0001);
+        assertEquals(1, firstStar.returnEuclideanDis(), 0.0001);
         Star secondStar = starsFromCSV.get(1);
-        assertEquals(2, secondStar.euclideanDistance, 0.0001);
+        assertEquals(2, secondStar.returnEuclideanDis(), 0.0001);
         Star thirdStar = starsFromCSV.get(2);
-        assertEquals(3, thirdStar.euclideanDistance, 0.0001);
+        assertEquals(3, thirdStar.returnEuclideanDis(), 0.0001);
 
     }
 
     @Test
     public void testSortDistances() throws IOException {
         CSVReader csvReader = new CSVReader("data/stars/three-star.csv");
-        ArrayList<Star> stars = csvReader.starList;
+        ArrayList<Star> stars = csvReader.returnStarList();
         Star mainStar = new Star("test", "test", 0.0, 0.0, 0.0);
         naive_knn knn = new naive_knn(mainStar, stars, 3);
         knn.setDistances();
         knn.sortDistances();
         Star firstStar = knn.returnStarsFromCSV().get(0);
-        assertEquals(1, firstStar.euclideanDistance, 0.0001);
+        assertEquals(1, firstStar.returnEuclideanDis(), 0.0001);
         Star secondStar = knn.returnStarsFromCSV().get(1);
-        assertEquals(2, secondStar.euclideanDistance, 0.0001);
+        assertEquals(2, secondStar.returnEuclideanDis(), 0.0001);
         Star thirdStar = knn.returnStarsFromCSV().get(2);
-        assertEquals(3, thirdStar.euclideanDistance, 0.0001);
+        assertEquals(3, thirdStar.returnEuclideanDis(), 0.0001);
     }
 
     @Test
     public void testGetTopKEntries() throws IOException {
         CSVReader csvReader = new CSVReader("data/stars/three-star.csv");
-        ArrayList<Star> stars = csvReader.starList;
+        ArrayList<Star> stars = csvReader.returnStarList();
         Star mainStar = new Star("test", "test", 0.0, 0.0, 0.0);
         naive_knn knn = new naive_knn(mainStar, stars, 3);
         knn.setDistances();
@@ -113,23 +113,23 @@ public class naive_knnTest {
         knn.getTopKEntries();
         ArrayList<Star> kStars = knn.returnKStars();
         Star firstStar = kStars.get(0);
-        assertEquals("Star One", firstStar.name);
+        assertEquals("Star One", firstStar.returnStarName());
         Star secondStar = kStars.get(1);
-        assertEquals("Star Two", secondStar.name);
+        assertEquals("Star Two", secondStar.returnStarName());
         Star thirdStar = kStars.get(2);
-        assertEquals("Star Three", thirdStar.name);
+        assertEquals("Star Three", thirdStar.returnStarName());
 
         // Test large stardata.csv file for functionality purposes.
         CSVReader csvReader2 = new CSVReader("data/stars/stardata.csv");
-        ArrayList<Star> stars2 = csvReader2.starList;
+        ArrayList<Star> stars2 = csvReader2.returnStarList();
         naive_knn knn2 = new naive_knn(mainStar, stars2, 10);
         knn2.knnAlgorithm();
         // uncomment below to test output
         //  knn2.displayResults();
         Star firstStar2 = knn2.returnKStars().get(0);
-        assertEquals("0", firstStar2.starID);
+        assertEquals("0", firstStar2.returnStarID());
         Star secondStar2 = knn2.returnKStars().get(1);
-        assertEquals("70667", secondStar2.starID);
+        assertEquals("70667", secondStar2.returnStarID());
 
 
         // make convoluted example to test ties:
@@ -156,7 +156,7 @@ public class naive_knnTest {
     @Test
     public void testDistanceBetweenPoints() throws IOException {
         CSVReader csvReader = new CSVReader("data/stars/three-star.csv");
-        ArrayList<Star> stars = csvReader.starList;
+        ArrayList<Star> stars = csvReader.returnStarList();
         Star mainStar = new Star("test", "test", 0.0, 0.0, 0.0);
         naive_knn knn = new naive_knn(mainStar, stars, 3);
         Double dist1 = knn.distanceBetweenPoints(1.0, 0.0, 0.0, 0.0, 0.0, 0.0);

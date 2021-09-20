@@ -16,7 +16,7 @@ public class CSVReaderTest {
         CSVReader csvReader = new CSVReader("data/stars/three-star.csv");
 
         // test proper CSVReader construction:
-        assertEquals("data/stars/three-star.csv", csvReader.filePath);
+        assertEquals("data/stars/three-star.csv", csvReader.returnFilePath());
 
         List<Star> testList = new ArrayList<>();
         Star testStar1 = new Star("1", "Star One", 1.0, 0.0, 0.0);
@@ -27,19 +27,19 @@ public class CSVReaderTest {
         testList.add(testStar3);
 
         // test x values
-        assertEquals(testList.get(0).x, csvReader.starList.get(0).x);
-        assertEquals(testList.get(1).x, csvReader.starList.get(1).x);
-        assertEquals(testList.get(2).x, csvReader.starList.get(2).x);
+        assertEquals(testList.get(0).returnX(), csvReader.returnStarList().get(0).returnX());
+        assertEquals(testList.get(1).returnX(), csvReader.returnStarList().get(1).returnX());
+        assertEquals(testList.get(2).returnX(), csvReader.returnStarList().get(2).returnX());
 
         // test starID
-        assertEquals(testList.get(0).starID, csvReader.starList.get(0).starID);
-        assertEquals(testList.get(1).starID, csvReader.starList.get(1).starID);
-        assertEquals(testList.get(2).starID, csvReader.starList.get(2).starID);
+        assertEquals(testList.get(0).returnStarID(), csvReader.returnStarList().get(0).returnStarID());
+        assertEquals(testList.get(1).returnStarID(), csvReader.returnStarList().get(1).returnStarID());
+        assertEquals(testList.get(2).returnStarID(), csvReader.returnStarList().get(2).returnStarID());
 
         // test name
-        assertEquals(testList.get(0).name, csvReader.starList.get(0).name);
-        assertEquals(testList.get(1).name, csvReader.starList.get(1).name);
-        assertEquals(testList.get(2).name, csvReader.starList.get(2).name);
+        assertEquals(testList.get(0).returnStarName(), csvReader.returnStarList().get(0).returnStarName());
+        assertEquals(testList.get(1).returnStarName(), csvReader.returnStarList().get(1).returnStarName());
+        assertEquals(testList.get(2).returnStarName(), csvReader.returnStarList().get(2).returnStarName());
 
     }
 
@@ -54,11 +54,11 @@ public class CSVReaderTest {
         Star createdStar = CSVReader.createStar(starData);
 
         // test that Star was created correctly
-        assertEquals("1", createdStar.starID);
-        assertEquals("Star One", createdStar.name);
-        assertEquals(1.0, createdStar.x, 0.0001);
-        assertEquals(0.0, createdStar.y, 0.0001);
-        assertEquals(0.0, createdStar.z, 0.0001);
+        assertEquals("1", createdStar.returnStarID());
+        assertEquals("Star One", createdStar.returnStarName());
+        assertEquals(1.0, createdStar.returnX(), 0.0001);
+        assertEquals(0.0, createdStar.returnY(), 0.0001);
+        assertEquals(0.0, createdStar.returnZ(), 0.0001);
 
     }
 }
